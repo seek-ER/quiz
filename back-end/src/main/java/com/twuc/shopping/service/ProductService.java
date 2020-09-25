@@ -20,7 +20,7 @@ public class ProductService {
         final List<String> productName = productRepository.findAll().stream()
                 .map(element -> element.getName()).collect(Collectors.toList());
         if (productName.contains(product.getName())){
-            throw new ProductNotValidException("product name has been existed");
+            throw new ProductNotValidException("商品名称已存在，请输入新的商品名称");
         }
         ProductPO productPO = ProductPO.builder().name(product.getName())
                 .price(product.getPrice())
@@ -29,5 +29,9 @@ public class ProductService {
         productRepository.save(productPO);
         final int size = productRepository.findAll().size();
         return productRepository.findAll().get(size - 1).getId();
+    }
+
+    public List<ProductPO> findAllProducts() {
+        return productRepository.findAll();
     }
 }

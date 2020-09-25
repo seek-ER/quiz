@@ -15,8 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -76,6 +78,24 @@ class ProductControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error",is("product name has been existed")));
 
+    }
+
+    @Test
+    public void should_show_all_products() throws Exception{
+        ProductPO productPO1 = ProductPO.builder().name("可乐1").price(3).unit("元").picture("https://i.loli.net/2020/09/25/WuQpbHrcifP4LyU.jpg").build();
+        ProductPO productPO2 = ProductPO.builder().name("可乐2").price(3).unit("元").picture("https://i.loli.net/2020/09/25/WuQpbHrcifP4LyU.jpg").build();
+        productRepository.save(productPO);
+        productRepository.save(productPO1);
+        productRepository.save(productPO2);
+        mockMvc
+                .perform(get("/product"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$",hasSize(3)));
+
+        assertEquals(productRepository.findAll().get(0).getName(),"可乐");
+        assertEquals(productRepository.findAll().get(1).getName(),"可乐1");
+        assertEquals(productRepository.findAll().get(2).getName(),"可乐2");
     }
 
 }
