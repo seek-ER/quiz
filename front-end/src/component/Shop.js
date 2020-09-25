@@ -1,39 +1,42 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
+import Product from "./Product";
+import './shop.css';
 
 class Shop extends Component{
     constructor(props) {
         super(props);
-        this.state={
-
-        };
+        this.state = {
+            products: [],
+        }
     }
 
-    render(){
-        return(
-            <div className={'timer'}>
-                <h1>在线倒计时器</h1>
-                <div className={'timeMiddle'}>
-                    <div className={'timeMiddleLeft'}>
-                        <div>
-                            设置时间
-                            <input type="text"/>
-                        </div>
-                        <div>
-                            <button>
-                                start
-                            </button>
-                        </div>
-                    </div>
-                    <div className={'timeMiddleRight'}>
-                        <input type="text"/>
-                    </div>
-                </div>
-                <div className={'timerEnd'}>
-                    <NavLink to={'/'}>回到首页</NavLink>
-                </div>
-            </div>
-        )
+    componentDidMount = async () => {
+        const URL = 'http://localhost:8080/product';
+        const response = await fetch(URL);
+        const data = await response.json();
+
+        this.setState({
+            products:data
+        })
+    }
+
+    handleClick = () => {
+
+    }
+
+    render() {
+        console.log('Render all');
+        return <div className={'products'}>
+            {this.state.products.map(product =>
+                <Product
+                    name={product.name}
+                    price={product.price}
+                    unit={product.unit}
+                    picture={product.picture}
+                    handleClick={this.handleClick}
+                />)}
+        </div>
     }
 }
 
