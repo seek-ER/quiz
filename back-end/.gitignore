@@ -1,3 +1,4 @@
+application.yml
 HELP.md
 .gradle
 build/
@@ -32,5 +33,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-application.yml

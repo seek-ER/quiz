@@ -18,15 +18,7 @@ public class ProductPO {
     private int price;
     private String unit;
     private String picture;
-
-    private int id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Id
-    public int getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 }

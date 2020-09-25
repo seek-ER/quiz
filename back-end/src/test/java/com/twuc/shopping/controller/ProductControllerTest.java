@@ -18,6 +18,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,6 +61,21 @@ class ProductControllerTest {
         assertEquals(3,all.get(0).getPrice());
         assertEquals("元",all.get(0).getUnit());
         assertEquals("https://i.loli.net/2020/09/25/WuQpbHrcifP4LyU.jpg",all.get(0).getPicture());
+    }
+
+    @Test
+    public void should_not_add_product_when_name_repetitive() throws Exception{
+        String jsonString = objectMapper.writeValueAsString(product);
+        mockMvc
+                .perform(post("/product").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+        mockMvc
+                .perform(post("/product").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error",is("product name has been existed")));
+
     }
 
 }
