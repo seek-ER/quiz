@@ -9,14 +9,12 @@
 
 .product {
     box-sizing: border-box;
-    flex: 0 0 33%;
-    height: 200px;
-    margin-top: 30px;
+    flex: 0 0 22%;
+    margin: 10px;
     border: 1px solid lightgray;
 }
 
 img {
     width: 80%;
     height: 80%;
-
 }
