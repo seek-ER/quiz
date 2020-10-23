@@ -18,4 +18,8 @@ public class AllOrderService {
         orders.forEach(order -> order.setAllOrderOnce(allOrderPO));
         allOrderRepository.save(allOrderPO);
     }
+
+    public List<AllOrderPO> findAllOrders() {
+        return allOrderRepository.findAll();
+    }
 }

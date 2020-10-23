@@ -1,5 +1,6 @@
 package com.twuc.shopping.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class OrderPO {
     private int id;
 
     @ManyToOne
+    @JsonIgnore
     private AllOrderPO allOrderOnce;
 }

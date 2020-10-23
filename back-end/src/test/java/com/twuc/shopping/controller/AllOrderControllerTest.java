@@ -17,8 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -64,5 +67,26 @@ class AllOrderControllerTest {
         assertEquals(1, all.size());
 
         assertEquals(2, orderRepository.findAll().size());
+    }
+
+    @Test
+    public void should_show_allOrder() throws Exception {
+        final ArrayList<OrderPO> orderPOS = new ArrayList<>();
+        orderPOS.add(orderPO1);
+        orderPOS.add(orderPO2);
+        final AllOrderPO allOrderPO = AllOrderPO.builder().orders(orderPOS).build();
+        String jsonString = objectMapper.writeValueAsString(allOrderPO);
+        mockMvc
+                .perform(post("/allOrder").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+        final AllOrderPO allOrderPO2 = AllOrderPO.builder().orders(orderPOS).build();
+        String jsonString2 = objectMapper.writeValueAsString(allOrderPO2);
+        mockMvc
+                .perform(post("/allOrder").content(jsonString2).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+        mockMvc
+                .perform(get("/showAllOrders"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(2)));
     }
 }
