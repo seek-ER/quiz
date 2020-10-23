@@ -76,7 +76,7 @@ class ProductControllerTest {
                 .perform(post("/product").content(jsonString).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error",is("product name has been existed")));
+                .andExpect(jsonPath("$.error",is("商品名称已存在，请输入新的商品名称")));
 
     }
 
