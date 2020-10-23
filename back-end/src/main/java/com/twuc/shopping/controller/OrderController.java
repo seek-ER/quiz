@@ -1,12 +1,16 @@
 package com.twuc.shopping.controller;
 
 import com.twuc.shopping.domain.Order;
+import com.twuc.shopping.po.OrderPO;
 import com.twuc.shopping.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class OrderController {
@@ -19,9 +23,9 @@ public class OrderController {
         return ResponseEntity.created(null).build();
     }
 
-/*    @GetMapping("/orders")
+    @GetMapping("/orders")
     public ResponseEntity<List<OrderPO>> getOrders(){
         List<OrderPO> orders = orderService.findAllOrders();
         return ResponseEntity.ok(orders);
-    }*/
+    }
 }

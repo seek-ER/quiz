@@ -6,6 +6,7 @@ import com.twuc.shopping.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,7 @@ public class OrderService {
         orderRepository.save(orderPO);
     }
 
-/*    public List<OrderPO> findAllOrders() {
+    public List<OrderPO> findAllOrders() {
         return orderRepository.findAll();
-    }*/
+    }
 }
