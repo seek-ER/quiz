@@ -6,22 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "allOrder")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderPO {
-    private String name;
-    private int price;
-    private int number;
-    private String unit;
+public class AllOrderPO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    private AllOrderPO allOrderOnce;
+    @OneToMany(mappedBy = "allOrderOnce", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Size(min = 1)
+    List<OrderPO> orders;
 }
