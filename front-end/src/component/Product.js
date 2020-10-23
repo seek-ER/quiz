@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {PlusCircleOutlined} from '@ant-design/icons';
 import {Button} from 'antd';
+import Cart from './Cart'
 import './shop.css';
 
 class Product extends Component {
@@ -14,7 +15,7 @@ class Product extends Component {
                     {this.props.name}
                 </div>
                 <span>
-                    {this.props.price}
+                    {this.props.price}元/
                 </span>
                 <span>
                     {this.props.unit}
@@ -23,6 +24,7 @@ class Product extends Component {
                         onClick={() => this.props.handleClick(this.props.name, this.props.price, this.props.unit)}
                         icon={<PlusCircleOutlined/>}/>
             </div>
+            <Cart/>
         </span>
     }
 }
