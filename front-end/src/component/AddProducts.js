@@ -1,8 +1,4 @@
 import React, {Component} from 'react';
-import {NavLink} from "react-router-dom";
-import 'jquery/dist/jquery.min.js';
-import 'popper.js/dist/popper.js';
-import 'bootstrap/dist/js/bootstrap.min.js';
 
 class AddProducts extends Component {
     constructor(props) {
@@ -35,10 +31,10 @@ class AddProducts extends Component {
                 picture: this.state.pic,
             })
         }).then(function(response) {
-            if (response.status === 201){
+            if (response.status === 201) {
                 alert("添加成功")
             }
-            if (response.status == 400){
+            if (response.status === 400) {
                 alert("商品名称已存在，请输入新的商品名称")
             }
         });

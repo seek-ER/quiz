@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {NavLink} from "react-router-dom";
 import Product from "./Product";
 import './shop.css';
 
@@ -17,12 +16,27 @@ class Shop extends Component{
         const data = await response.json();
 
         this.setState({
-            products:data
+            products: data
         })
     }
 
-    handleClick = () => {
-
+    handleClick = async (productName, productPrice, productUnit) => {
+        await fetch("http://localhost:8080/order", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: productName,
+                price: productPrice,
+                unit: productUnit
+            })
+        }).then(response => {
+            if (response.status === 201) {
+                alert("添加成功")
+            }
+        });
     }
 
     render() {
