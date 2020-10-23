@@ -14,14 +14,17 @@ public class OrderService {
     OrderRepository orderRepository;
 
     public void addOrder(Order order) {
-        OrderPO orderPO = OrderPO.builder().name(order.getName())
-                .price(order.getPrice())
-                .unit(order.getUnit()).build();
+        OrderPO orderPO;
         final Optional<OrderPO> findedOrderPO = orderRepository.findByName(order.getName());
         if (findedOrderPO.isPresent()) {
+            orderPO = findedOrderPO.get();
             orderPO.setNumber(findedOrderPO.get().getNumber() + 1);
         } else {
-            orderPO.setNumber(1);
+            orderPO = OrderPO.builder().name(order.getName())
+                    .price(order.getPrice())
+                    .unit(order.getUnit())
+                    .number(1)
+                    .build();
         }
         orderRepository.save(orderPO);
     }

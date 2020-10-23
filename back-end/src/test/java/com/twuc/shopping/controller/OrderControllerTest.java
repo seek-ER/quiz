@@ -15,7 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,9 +54,28 @@ class OrderControllerTest {
 
         List<OrderPO> all = orderRepository.findAll();
         assertNotNull(all);
-        assertEquals("可乐",all.get(0).getName());
-        assertEquals(3,all.get(0).getPrice());
-        assertEquals("元",all.get(0).getUnit());
-        assertEquals(1,all.get(0).getNumber());
+        assertEquals("可乐", all.get(0).getName());
+        assertEquals(3, all.get(0).getPrice());
+        assertEquals("元", all.get(0).getUnit());
+        assertEquals(1, all.get(0).getNumber());
+    }
+
+    @Test
+    public void should_add_order_given_exist_product() throws Exception {
+        String jsonString = objectMapper.writeValueAsString(order);
+        mockMvc
+                .perform(post("/order").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+        mockMvc
+                .perform(post("/order").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+        List<OrderPO> all = orderRepository.findAll();
+        assertNotNull(all);
+        assertEquals("可乐", all.get(0).getName());
+        assertEquals(3, all.get(0).getPrice());
+        assertEquals("元", all.get(0).getUnit());
+        assertEquals(2, all.get(0).getNumber());
     }
 }
